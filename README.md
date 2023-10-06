@@ -107,7 +107,11 @@ function canObjectParry(projectilePosition, objectPosition, projectileVelocity, 
 		(distanceToIntercept <= 0.005 and timeToIntercept <= 0.20);
 		(distanceToIntercept >= 75 and distanceToIntercept <= 100 and timeToIntercept <= 0.5);
 		(distanceToIntercept >= 75 and distanceToIntercept <= 100 and timeToIntercept <= 0.4);
-		true;
+		(distanceToIntercept <= 0.20);
+		(distanceToIntercept <= 0.10);
+		(distanceToIntercept <= 0.10);
+		
+		
 	}
 	
 	local r
@@ -185,3 +189,4 @@ end
 Init()
 
 --Local.ChildAdded:Connect(Init)
+
