@@ -72,7 +72,7 @@ function calculateDistance(projectilePosition, objectPosition)
 	return math.abs((projectilePosition - objectPosition).Magnitude)
 end
 
-local parryCooldownTime = 0.05
+local parryCooldownTime = 0.005
 local proximityThreshold = 0.20
 
 -- Function to check if the object can intercept (parry) the projectile
@@ -80,10 +80,16 @@ function canObjectParry(projectilePosition, objectPosition, projectileVelocity, 
 	local timeToIntercept = calculateProjectileTime(projectilePosition, objectPosition, projectileVelocity)
 	local distanceToIntercept = calculateDistance(projectilePosition + projectileVelocity * timeToIntercept, objectPosition + objectVelocity * timeToIntercept)
 	local Anticipate = Anticipate(timeToIntercept)
-	
+	local originalParryCooldownTime = conditions()
 	
 	print("CanParry:", distanceToIntercept, timeToIntercept, Anticipate)
 	
+if distanceToIntercept <= 20 then
+	parryCooldownTime = 0.01
+else
+    parryCooldownTime = originalParryCooldownTime
+end
+
 	local conditions = {
 		(Anticipate and distanceToIntercept <= 75);
 		(distanceToIntercept >= 35 and distanceToIntercept <= 50 and timeToIntercept <= 0.6);
@@ -111,9 +117,6 @@ function canObjectParry(projectilePosition, objectPosition, projectileVelocity, 
 		(distanceToIntercept <= 0.005 and timeToIntercept <= 0.20);
 		(distanceToIntercept >= 75 and distanceToIntercept <= 100 and timeToIntercept <= 0.5);
 		(distanceToIntercept >= 75 and distanceToIntercept <= 100 and timeToIntercept <= 0.4);
-		(distanceToIntercept <= 0.20);
-		(distanceToIntercept <= 0.10);
-		(distanceToIntercept <= 0.05);
 		
 		
 	}
